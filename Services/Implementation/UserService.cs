@@ -218,19 +218,6 @@ namespace Services.Implementation
             return result;
         }
 
-        public async Task<DeleteUserViewModel> BuildDeleteUserViewModel(DeleteUserViewModel? viewModel = null)
-        {
-            if (viewModel == null)
-            {
-                viewModel = new DeleteUserViewModel { User = new User() };
-            }
-
-            viewModel.SchoolList = await _schoolContext.School.ToListAsync();
-            viewModel.UserTypeList = await _schoolContext.UserType.ToListAsync();
-            viewModel.YearGroupList = await _schoolContext.YearGroup.ToListAsync();
-
-            return viewModel;
-        }
 
 
         public async Task<ActionResult> AddUser(User user)
@@ -242,19 +229,19 @@ namespace Services.Implementation
             return new OkResult();
         }
 
-        public async Task<ActionResult> EditUser(User user)
-        {
+        public async Task<bool> EditUser(User user)
+        { 
+            if(await _schoolContext.User.AnyAsync(a => a.UserId ==  user.UserId))
+            {
+                var userToUpdate = await _schoolContext.User.SingleAsync(a => a.UserId == user.UserId);
+                userToUpdate = _mapper.Map(user, userToUpdate);
+                await _schoolContext.SaveChangesAsync();
 
-            var userToEdit = await _schoolContext.User.FirstAsync();
-            
-            userToEdit = _mapper.Map(user, userToEdit);
+                return true;
 
-            _schoolContext.User.Update(userToEdit);
-            
-            await _schoolContext.SaveChangesAsync();
+            }
 
-            return new OkResult();
-
+            return false;
         }
 
         public async Task<ActionResult> DeleteUser(User user)

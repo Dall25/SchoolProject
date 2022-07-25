@@ -17,10 +17,8 @@ namespace Services.Interfaces
 		    Task<EditUserViewModel> BuildEditUserViewModel(Guid userId);
 		    Task<ValidationResult> ValidateEditUserViewModel(EditUserViewModel viewModel);
 
-			Task<DeleteUserViewModel> BuildDeleteUserViewModel(DeleteUserViewModel? viewModel = null);
-
 			Task<ActionResult> AddUser(User user);
-		    Task<ActionResult> EditUser(User user);
+		    Task<bool> EditUser(User user);
             Task<ActionResult> DeleteUser(User user);
 
 

@@ -86,7 +86,11 @@ namespace SchoolProject.Controllers
                 return View(viewModel);
             }
 
-            await _userService.EditUser(viewModel.User);
+            if(!await _userService.EditUser(viewModel.User))
+            {
+                return View(viewModel);
+            }
+            
 
             return Redirect("Index");
         }
@@ -94,16 +98,15 @@ namespace SchoolProject.Controllers
 
 
 
-        [HttpPost]
-        public async Task<IActionResult> Delete(DeleteUserViewModel viewModel, User user)
-        {
+        //[HttpPost]
+        //public async Task<IActionResult> Delete(Guid userId)
+        //{
             
-            viewModel = await _userService.BuildDeleteUserViewModel(viewModel);
-            return View(viewModel);
+            
 
-            await _userService.DeleteUser(user);
+        //    await _userService.DeleteUser(userId);
             
-            return Redirect("Index");
+        //    return Redirect("Index");
 
 
 
@@ -112,6 +115,6 @@ namespace SchoolProject.Controllers
         }
 
     }
-}
+
 
 
