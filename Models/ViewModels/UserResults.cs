@@ -13,6 +13,7 @@ namespace Models.ViewModels
         public List<User> Users { get; set; }
         public Sorting Sorting { get; set; }
         public Paging Paging { get; set; }
+        public User User { get; set; }
     }
 }
 

@@ -19,7 +19,7 @@ namespace Services.Interfaces
 
 			Task<ActionResult> AddUser(User user);
 		    Task<bool> EditUser(User user);
-            Task<ActionResult> DeleteUser(User user);
+            Task<bool> Delete(User user);
 
 
 	}

@@ -33,7 +33,10 @@
                         <a asp-action="Edit" asp-route-userId="@item.UserId">Edit</a>
                     </td>
                     <td>
-                        <a asp-action="Delete" asp-route-userId="@item.UserId">Delete</a>
+                       <form asp-page-handler="Delete" method="Delete" asp-route-id="@item.UserId" 
+                        onclick="return confirm('Are you sure you want to delete this?')">
+                        <button type="submit" class="btn btn-default"><i class="fas fa-trash-alt text-white"></i>Delete</button>
+                       </form>
                     </td>
                 </tr>
             }

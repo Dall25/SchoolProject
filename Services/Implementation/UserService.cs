@@ -244,15 +244,19 @@ namespace Services.Implementation
             return false;
         }
 
-        public async Task<ActionResult> DeleteUser(User user)
+        public async Task<bool> Delete(User user)
         {
-            var userToDelete = await _schoolContext.User.FirstAsync();
+            if (await _schoolContext.User.AnyAsync(a => a.UserId == user.UserId))
+            {
 
-            _schoolContext.User.Remove(userToDelete);
-            await _schoolContext.SaveChangesAsync();
+                var userToDelete = await _schoolContext.User.SingleAsync(a => a.UserId == user.UserId);
+                _schoolContext.User.Remove(userToDelete);
+                await _schoolContext.SaveChangesAsync();
+                return true;
+            }
 
 
-            return new OkResult();
+            return false;
         }
 
         
